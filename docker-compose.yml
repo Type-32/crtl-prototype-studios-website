@@ -1,0 +1,14 @@
+version: "3.4"
+services:
+  vite_app:
+    image: node:alpine
+    entrypoint: /bin/sh
+    ports:
+      - ${STACK_PORT}:8000
+    working_dir: /srv/app
+    volumes:
+      - app:/srv/app
+    tty: true
+
+volumes:
+  app:

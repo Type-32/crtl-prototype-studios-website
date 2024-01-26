@@ -1,44 +1,48 @@
 import {defineStore} from "pinia";
 import {joinUrl} from "@/scripts/api";
 import axios from "axios";
-import type {Post, Project, Payload} from "@/scripts/interfaces/types";
+import type {Post, Project, Payload, StoreState} from "@/scripts/interfaces/types";
 
 export const useContentStore = defineStore({
     id: 'contentStore',
-    state: () => ({
-        posts: [] as Post[],
-        projects: [] as Project[],
+    state: (): StoreState => ({
+        posts: {
+            data: [],
+            meta: {} // replace with your default meta object
+        },
+        projects: {
+            data: [],
+            meta: {} // replace with your default meta object
+        }
     }),
     actions: {
         async fetchPosts(forceRefresh: boolean = false): Promise<Payload<Post[]>>{
-            let posts: Payload<Post[]> = { data: [], meta: {} };  // you might want to provide a proper default meta object here
-            if(forceRefresh || this.posts == null) {
+            let posts: Payload<any[]> = { data: [], meta: {} };
+            if(forceRefresh || this.posts.data.length === 0) {
                 try {
                     await axios.get(joinUrl(["api","posts"])).then((response) => {
                         posts = { data: response.data.data, meta: response.data.meta };
-                        this.posts = response.data.data;
+                        this.posts = posts;
                     });
                 } catch(error) {
                     console.error('Error fetching posts:', error);
                 }
             }
-
-            return posts;
+            return this.posts;
         },
         async fetchProjects(forceRefresh: boolean = false): Promise<Payload<Project[]>>{
-            let projects: Payload<Project[]> = { data: [], meta: {} };  // you might want to provide a proper default meta object here
-            if(forceRefresh || this.posts == null) {
+            let projects: Payload<Project[]> = { data: [], meta: {} };
+            if(forceRefresh || this.projects.data.length === 0) {
                 try {
                     await axios.get(joinUrl(["api","projects"])).then((response) => {
                         projects = { data: response.data.data, meta: response.data.meta };
-                        this.projects = response.data.data;
+                        this.projects = projects;
                     });
                 } catch(error) {
                     console.error('Error fetching projects:', error);
                 }
             }
-
-            return projects;
+            return this.projects;
         }
     }
 })

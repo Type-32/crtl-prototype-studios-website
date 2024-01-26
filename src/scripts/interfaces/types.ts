@@ -83,3 +83,29 @@ export interface Media {
         updatedAt: Date;
     }
 }
+
+export interface Pagination {
+    page: number;
+    pageSize: number;
+    pageCount: number;
+    total: number;
+}
+
+export interface Payload<T> {
+    data: T;
+    meta: {
+        pagination?: Pagination;
+    };
+}
+
+export interface Payload<T> {
+    data: T;
+    meta: {
+        pagination?: Pagination
+    }; // replace with your meta type
+}
+
+export interface StoreState {
+    posts: Payload<Post[]>;
+    projects: Payload<Project[]>;
+}

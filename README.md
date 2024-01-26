@@ -1,6 +1,12 @@
-# crtl-prototype-studios-website
+# CRTL Prototype Studios Website
 
-This template should help get you started developing with Vue 3 in Vite.
+This is the official website for CRTL Prototype Studios.
+
+> Frontend Built Using: **Vite.js** + **Vue 3** + **Tailwind CSS** + **daisyUI** + **md-editor-v3**
+
+> Backend Built Using: **Strapi Headless CMS**
+
+> Deployed Using: **Docker Compose**
 
 ## Recommended IDE Setup
 
