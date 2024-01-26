@@ -1,14 +1,15 @@
-version: "3.4"
+version: '3.8'
 services:
-  vite_app:
-    image: node:alpine
-    entrypoint: /bin/sh
+  vue-app:
+    build: .
     ports:
-      - ${STACK_PORT}:8000
-    working_dir: /srv/app
-    volumes:
-      - app:/srv/app
-    tty: true
+      - "${STACK_PORT}:8000"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - vue-network
 
-volumes:
-  app:
+# Define the network to be used by this stack
+networks:
+  vue-network:
+    driver: bridge
