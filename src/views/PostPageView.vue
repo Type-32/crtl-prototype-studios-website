@@ -5,6 +5,7 @@ import axios from 'axios';
 import {conjunctUrl} from "@/scripts/api";
 import {MdCatalog, MdPreview} from "md-editor-v3";
 import 'md-editor-v3/lib/preview.css';
+import Copyright from "@/components/Copyright.vue";
 
 const $router = useRouter();
 const $route = useRoute();
@@ -51,16 +52,16 @@ function formatDateToMMMddYYYY(isoTimestamp: string): string {
     <div class="flex flex-row w-full min-h-screen">
         <div class="flex flex-col sticky top-20 h-full mx-5 p-4 w-72">
             <h1 class="text-2xl">Catalog</h1>
-            <span class="badge badge-neutral mt-2">
+            <span class="badge badge-neutral mt-2 h-fit px-3 py-1">
                 {{`Post created at ${formatDateToMMMddYYYY(post?.data[0]?.attributes?.createdAt)}`}}
             </span>
-            <span class="badge mt-2">
+            <span class="badge mt-2 h-fit">
                 {{`Last updated at ${formatDateToMMMddYYYY(post?.data[0]?.attributes?.updatedAt)}`}}
             </span>
             <div class="divider"/>
             <MdCatalog :editorId="'preview-only'" :scrollElement="scrollElement" class="flex-grow"/>
         </div>
-        <div class="flex-grow shadow-md">
+        <div class="flex-grow">
             <div class="object-cover w-full">
                 <img :src="conjunctUrl(post?.data[0]?.attributes?.postCover?.data?.attributes?.url)" class="object-cover w-full h-40"/>
             </div>
@@ -69,6 +70,7 @@ function formatDateToMMMddYYYY(isoTimestamp: string): string {
                 Written By <span class="-ml-2 p-2 badge badge-primary">{{post?.data[0]?.attributes?.postAuthor.data?.attributes?.username}}</span>
             </div>
             <MdPreview :editorId="'preview-only'" :modelValue="post?.data[0]?.attributes?.postContent" class="px-10" />
+            <Copyright/>
         </div>
     </div>
 </template>

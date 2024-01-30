@@ -5,6 +5,7 @@ import axios from 'axios';
 import {conjunctUrl} from "@/scripts/api";
 import {MdCatalog, MdPreview} from "md-editor-v3";
 import 'md-editor-v3/lib/preview.css';
+import Copyright from "@/components/Copyright.vue";
 
 const $router = useRouter();
 const $route = useRoute();
@@ -59,6 +60,7 @@ function formatDateToMMMddYYYY(isoTimestamp: string): string {
                 Created By <span class="-ml-2 p-2 badge badge-primary">{{ project?.data[0]?.attributes?.projectAuthor.data?.attributes?.username }}</span>
             </div>
             <MdPreview :editorId="'preview-only'" :modelValue="project?.data[0]?.attributes?.projectDescription" class="px-10" />
+            <Copyright/>
         </div>
     </div>
 </template>

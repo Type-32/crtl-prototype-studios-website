@@ -37,7 +37,7 @@ function setPageIndex(num: number) { projectPageIndex.value = num }
         <h1 class="pt-8 font-bold text-4xl">Projects</h1>
         <div class="divider"/>
         <div class="grid grid-cols-3 w-full py-5 gap-5">
-            <div class="hover:bg-primary group card shadow-md hover:shadow-lg hover:scale-[1.01] transition duration-300 cursor-pointer" v-for="(project, projectIndex) in paginatedProjects[projectPageIndex]" :key="projectIndex" @click="$router.push(`/project/${project?.attributes?.projectSlug}`)">
+            <div class="hover:bg-primary group card shadow-md hover:shadow-lg hover:scale-[1.01] transition duration-300 cursor-pointer glass" v-for="(project, projectIndex) in paginatedProjects[projectPageIndex]" :key="projectIndex" @click="$router.push(`/project/${project?.attributes?.projectSlug}`)">
                 <figure><img :src="conjunctUrl(project?.attributes?.projectCover?.data?.attributes?.url)"/></figure>
                 <div class="card-body">
                     <h1 class="card-title group-hover:text-white transition duration-300">{{project?.attributes?.projectTitle}}</h1>
