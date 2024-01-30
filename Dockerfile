@@ -2,9 +2,6 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-CMD [ "git", "fetch", "origin", "main" ]
-CMD [ "git", "pull", "origin", "main" ]
-
 COPY package.json .
 
 RUN npm install
