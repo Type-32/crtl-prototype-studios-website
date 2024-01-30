@@ -37,14 +37,14 @@ function setPageIndex(num: number) { projectPageIndex.value = num }
         <h1 class="pt-8 font-bold text-4xl">Projects</h1>
         <div class="divider"/>
         <div class="grid grid-cols-3 w-full py-5 gap-5">
-            <div class="card shadow-md hover:shadow-lg hover:scale-[1.01] transition duration-300 cursor-pointer" v-for="(project, projectIndex) in paginatedProjects[projectPageIndex]" :key="projectIndex" @click="$router.push(`/project/${project?.attributes?.projectSlug}`)">
+            <div class="hover:bg-primary group card shadow-md hover:shadow-lg hover:scale-[1.01] transition duration-300 cursor-pointer" v-for="(project, projectIndex) in paginatedProjects[projectPageIndex]" :key="projectIndex" @click="$router.push(`/project/${project?.attributes?.projectSlug}`)">
                 <figure><img :src="conjunctUrl(project?.attributes?.projectCover?.data?.attributes?.url)"/></figure>
                 <div class="card-body">
-                    <h1 class="card-title">{{project?.attributes?.projectTitle}}</h1>
-                    <span>{{project?.attributes?.projectDescription.substring(0,100) + '...'}}</span>
+                    <h1 class="card-title group-hover:text-white transition duration-300">{{project?.attributes?.projectTitle}}</h1>
+                    <span class="group-hover:text-white/80 transition duration-300">{{project?.attributes?.projectDescription.substring(0,100) + '...'}}</span>
                     <div class="card-actions justify-end">
-                        <span class="badge badge-primary" v-if="project?.attributes?.isInEarlyAccess">Early Access</span>
-                        <span class="badge badge-neutral">{{project?.attributes?.projectStatus}}</span>
+                        <span class="badge badge-primary group-hover:badge-ghost" v-if="project?.attributes?.isInEarlyAccess">Early Access</span>
+                        <span class="badge badge-neutral group-hover:badge-ghost">{{project?.attributes?.projectStatus}}</span>
                     </div>
                 </div>
             </div>

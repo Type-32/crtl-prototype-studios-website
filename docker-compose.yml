@@ -3,4 +3,4 @@ services:
   vue-app:
     build: .
     ports:
-      - "${STACK_PORT}:8000"
+      - "${STACK_PORT}:4173"
