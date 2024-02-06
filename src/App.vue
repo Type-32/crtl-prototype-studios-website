@@ -1,18 +1,22 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import {conjunctUrl} from "@/scripts/api";
+
+function toGithub(){
+    window.open('https://github.com/Type-32/crtl-prototype-studios-website')
+}
 </script>
 
 <template>
     <div class="w-full min-h-screen">
         <div class="drawer bg-base-100">
             <div class="drawer-content">
-                <div class="top-0 z-30 bg-transparent sticky backdrop-blur bg-base-100 bg-opacity-90 flex shadow-sm">
+                <div class="top-0 z-30 sticky backdrop-blur bg-base-100 bg-opacity-80 flex shadow-sm">
                     <nav class="navbar w-full">
                         <div class="navbar-start">
                             <!--                        Dropdown show for cell phone compatability -->
                             <div class="dropdown">
-                                <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+                                <div tabindex="0" role="button" class="btn btn-ghost laptop:hidden">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                                          stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -23,6 +27,7 @@ import {conjunctUrl} from "@/scripts/api";
                                     class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                                     <li><a @click="$router.push({name: 'posts'})">Posts</a></li>
                                     <li><a @click="$router.push({name: 'projects'})">Projects</a></li>
+                                    <li><a @click="$router.push({name: 'galleries'})">Galleries</a></li>
                                 </ul>
                             </div>
                             <!--                        Icon shows for desktop compatability -->
@@ -34,14 +39,33 @@ import {conjunctUrl} from "@/scripts/api";
                                 </div>
                             </div>
                         </div>
-                        <div class="navbar-center hidden lg:flex">
+                        <div class="navbar-center max-laptop:hidden lg:flex">
                             <ul class="menu menu-horizontal px-1">
                                 <li><a @click="$router.push({name: 'posts'})">Posts</a></li>
                                 <li><a @click="$router.push({name: 'projects'})">Projects</a></li>
+                                <li><a @click="$router.push({name: 'galleries'})">Galleries</a></li>
                             </ul>
                         </div>
-                        <div class="navbar-end">
-                            <!--                        <a class="btn">Button</a>-->
+                        <div class="navbar-end gap-2">
+                            <div class="dropdown">
+                                <div tabindex="0" role="button" class="btn btn-ghost">
+                                    Theme
+                                    <svg width="12px" height="12px" class="h-2 w-2 fill-current opacity-60 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048"><path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path></svg>
+                                </div>
+                                <ul tabindex="0" class="dropdown-content z-[1] p-2 shadow-2xl backdrop-blur-xl bg-base-200 rounded-box w-fit gap-1.5 flex flex-col mt-2">
+                                    <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Default" value="default"/></li>
+                                    <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Dark" value="dark"/></li>
+                                </ul>
+                            </div>
+                            <a class="btn btn-outline group" @click="toGithub()">
+                                <div
+                                    class="size-7 rounded-3xl object-contain flex items-center justify-items-center -mx-1">
+                                    <img src="/src/assets/icons8-github-120.png" alt="studio icon"
+                                         class="size-32 object-contain w-full h-full transition duration-300 group-hover:hidden"/>
+                                    <img src="/src/assets/icons8-github-120%20(1).png" alt="studio icon"
+                                         class="size-32 object-contain w-full h-full transition duration-300 invisible group-hover:visible"/>
+                                </div>
+                            </a>
                         </div>
                     </nav>
                 </div>

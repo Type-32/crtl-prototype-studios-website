@@ -35,8 +35,8 @@ function setPageIndex(num: number) { postPageIndex.value = num }
 </script>
 
 <template>
-    <div class="px-32 py-10 flex flex-col">
-        <div>
+    <div class="px-32 py-10 flex flex-col max-tablet:px-10">
+        <div class="max-tablet:mb-44">
             <h1 class="font-bold text-4xl">Recent Posts</h1>
             <div class="divider"/>
             <div class="w-full skeleton h-32" v-if="loadingPage"/>

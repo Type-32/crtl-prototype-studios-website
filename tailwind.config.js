@@ -2,15 +2,21 @@
 export default {
   content: ["./src/**/*.{html,js,ts,jsx,tsx,vue}"],
   theme: {
+    screens: {
+      'tablet': '1023px',
+      // => @media (min-width: 640px) { ... }
+
+      'laptop': '1024px',
+      // => @media (min-width: 1024px) { ... }
+
+      'desktop': '1280px',
+      // => @media (min-width: 1280px) { ... }
+    },
     extend: {},
   },
-  plugins: [
-    // eslint-disable-next-line no-undef
-    require("daisyui"),
-    // eslint-disable-next-line no-undef
-    require('@tailwindcss/typography'),
-  ],
+  // eslint-disable-next-line no-undef
+  plugins: [require("@tailwindcss/typography"), require("daisyui")],
   daisyui: {
     themes: ["light", "dark", "cupcake"],
   },
-}
+};

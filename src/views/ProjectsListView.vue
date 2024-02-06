@@ -33,18 +33,18 @@ function setPageIndex(num: number) { projectPageIndex.value = num }
 </script>
 
 <template>
-    <div class="px-32">
+    <div class="px-32 max-tablet:px-10">
         <h1 class="pt-8 font-bold text-4xl">Projects</h1>
         <div class="divider"/>
-        <div class="grid grid-cols-3 w-full py-5 gap-5">
+        <div class="grid grid-cols-3 w-full py-5 gap-5 max-tablet:grid-cols-1 max-tablet:gap-10">
             <div class="hover:bg-primary group card shadow-md hover:shadow-lg hover:scale-[1.01] transition duration-300 cursor-pointer glass" v-for="(project, projectIndex) in paginatedProjects[projectPageIndex]" :key="projectIndex" @click="$router.push(`/project/${project?.attributes?.projectSlug}`)">
                 <figure><img :src="conjunctUrl(project?.attributes?.projectCover?.data?.attributes?.url)"/></figure>
                 <div class="card-body">
                     <h1 class="card-title group-hover:text-white transition duration-300">{{project?.attributes?.projectTitle}}</h1>
                     <span class="group-hover:text-white/80 transition duration-300">{{project?.attributes?.projectDescription.substring(0,100) + '...'}}</span>
                     <div class="card-actions justify-end">
-                        <span class="badge badge-primary group-hover:badge-ghost" v-if="project?.attributes?.isInEarlyAccess">Early Access</span>
-                        <span class="badge badge-neutral group-hover:badge-ghost">{{project?.attributes?.projectStatus}}</span>
+                        <span class="badge badge-primary group-hover:badge-neutral" >Early Access</span>
+                        <span class="badge badge-outline">{{project?.attributes?.projectStatus}}</span>
                     </div>
                 </div>
             </div>

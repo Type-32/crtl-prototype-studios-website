@@ -4,6 +4,7 @@ import PostsListView from "@/views/PostsListView.vue";
 import PostPageView from "@/views/PostPageView.vue";
 import ProjectsListView from "@/views/ProjectsListView.vue";
 import ProjectPageView from "@/views/ProjectPageView.vue";
+import GalleriesView from "@/views/GalleriesView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,6 +23,11 @@ const router = createRouter({
       path: '/projects',
       name: 'projects',
       component: ProjectsListView
+    },
+    {
+      path: '/galleries',
+      name: 'galleries',
+      component: GalleriesView
     },
     {
       path: '/post/:slug',

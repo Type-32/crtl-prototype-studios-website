@@ -3,15 +3,16 @@ import {onBeforeMount, ref} from "vue";
 import { useRoute, useRouter } from "vue-router";
 import axios from 'axios';
 import {conjunctUrl} from "@/scripts/api";
-import {MdCatalog, MdPreview} from "md-editor-v3";
-import 'md-editor-v3/lib/preview.css';
-import Copyright from "@/components/Copyright.vue";
+import Copyright from "@/components/CopyrightComponent.vue";
+import {marked} from "marked";
 
 const $router = useRouter();
 const $route = useRoute();
 const project = ref<any>(null);
 const loadingPage = ref(false);
 const scrollElement = document.documentElement // for Markdown Catalog Renderer
+
+const ProjectDesc = ref("")
 
 onBeforeMount(async () => {
     loadingPage.value = true
@@ -33,6 +34,10 @@ onBeforeMount(async () => {
         console.error(`Error fetching post: ${error?.message}`);
         $router.push('404'); // Redirect to the home page if there's any error
     }
+
+    if(project.value?.data[0]?.attributes?.projectDescription){
+        ProjectDesc.value = await marked(project.value?.data[0]?.attributes?.projectDescription)
+    }
     loadingPage.value = false
 });
 
@@ -50,17 +55,24 @@ function formatDateToMMMddYYYY(isoTimestamp: string): string {
 </script>
 
 <template>
-    <div class="w-full">
-        <div class="w-full">
-            <div class="object-cover w-full">
-                <img :src="conjunctUrl(project?.data[0]?.attributes?.projectCover?.data?.attributes?.url)" class="object-cover w-full h-60"/>
+    <div class="flex flex-col w-full min-h-screen items-center">
+        <div class="object-cover w-full">
+            <img :src="conjunctUrl(project?.data[0]?.attributes?.projectCover?.data?.attributes?.url)" class="object-cover w-full h-72"/>
+        </div>
+        <div class="w-full px-32 max-tablet:px-10 flex flex-col" id="article-content">
+            <div class="mt-8 flex-grow flex font-bold text-5xl text-center align-middle justify-center">{{ project?.data[0]?.attributes?.projectTitle }}</div>
+            <div class="object-contain flex flex-col items-center py-4">
+                <div class="divider w-full">
+                    Written By <span class="p-2 badge badge-primary badge-lg">{{project?.data[0]?.attributes?.projectAuthor.data?.attributes?.username}}</span>
+                </div>
+                <article class="prose w-full mt-10 max-w-none" v-html="ProjectDesc"/>
             </div>
-            <h1 class="mt-8 p-4 w-full font-bold text-5xl text-center">{{ project?.data[0]?.attributes?.projectTitle }}</h1>
-            <div class="divider px-10">
-                Created By <span class="-ml-2 p-2 badge badge-primary">{{ project?.data[0]?.attributes?.projectAuthor.data?.attributes?.username }}</span>
+            <div class="flex items-center flex-col">
+                <div class="h-fit px-3 mt-2 badge badge-lg badge-outline">
+                    {{`Project created at ${formatDateToMMMddYYYY(project?.data[0]?.attributes?.createdAt)}`}}
+                </div>
             </div>
-            <MdPreview :editorId="'preview-only'" :modelValue="project?.data[0]?.attributes?.projectDescription" class="px-10" />
-            <Copyright/>
+
         </div>
     </div>
 </template>
