@@ -43,7 +43,7 @@ function setPageIndex(num: number) { projectPageIndex.value = num }
                     <h1 class="card-title group-hover:text-white transition duration-300">{{project?.attributes?.projectTitle}}</h1>
                     <span class="group-hover:text-white/80 transition duration-300">{{project?.attributes?.projectDescription.substring(0,100) + '...'}}</span>
                     <div class="card-actions justify-end">
-                        <span class="badge badge-primary group-hover:badge-neutral" >Early Access</span>
+                        <span class="badge badge-primary group-hover:badge-neutral" v-if="project?.attributes?.isInEarlyAccess">Early Access</span>
                         <span class="badge badge-outline">{{project?.attributes?.projectStatus}}</span>
                     </div>
                 </div>

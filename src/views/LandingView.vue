@@ -33,7 +33,7 @@ onMounted(async () => {
                 <button class="btn btn-primary">Learn More</button>
             </div>
             <div
-                class="size-64 rotate-6 rounded-3xl bg-base-100 drop-shadow-lg object-contain p-12 flex items-center">
+                class="glass size-64 rotate-6 rounded-3xl drop-shadow-lg object-contain p-12 flex items-center">
                 <img src="/src/assets/CRTL_v2_new_nobg_512.png" alt="studio icon"
                      class="size-32 object-contain w-full h-full"/>
             </div>
@@ -44,6 +44,12 @@ onMounted(async () => {
         <div class="hero-content flex flex-row max-tablet:flex-col-reverse max-tablet:gap-10 gap-28">
             <article class="prose items-center text-center laptop:hidden desktop:hidden"><code>// Again, lots of interesting stuff here, be sure to check it out :)</code></article>
             <div class="stack w-96 max-tablet:w-max">
+                <div class="skeleton w-96 max-tablet:w-80 h-96 flex flex-col items-center justify-center" v-if="loadingPage">
+                    <div class="flex flex-col items-center justify-center space-y-4">
+                        <div class="loading loading-bars loading-lg"></div>
+                        <article class="prose"><code>// Loading Content... </code></article>
+                    </div>
+                </div>
                 <div class="card shadow-xl w-96 max-tablet:w-80 glass">
                     <figure><img :src="conjunctUrl(projectsRaw[0]?.attributes.projectCover?.data?.attributes?.url)" alt="Post Image"/></figure>
                     <div class="card-body">
@@ -71,12 +77,20 @@ onMounted(async () => {
                 <p class="py-6">These are some of our latest posts that usually covers some interesting topics, sometimes around casual stuff but mostly about development. They're good articles to read and chill to if you're having a bad day ;)</p>
                 <button class="btn btn-primary" @click="$router.push('posts')">Learn More</button>
             </div>
-            <div class="card shadow-xl w-96 max-tablet:w-80 glass">
-                <figure><img :src="conjunctUrl(postsRaw[0]?.attributes.postCover?.data?.attributes?.url)" alt="Post Image"/></figure>
-                <div class="card-body">
-                    <div class="text-md text-base-600 opacity-60">Post</div>
-                    <a class="font-bold text-2xl">{{postsRaw[0]?.attributes.postTitle}}</a>
-                    <div class="text-sm text-base-600">{{postsRaw[0]?.attributes.postContent?.substring(0,45) + '...'}}</div>
+            <div class="stack w-96 max-tablet:w-max">
+                <div class="skeleton w-96 max-tablet:w-80 h-96 flex flex-col items-center justify-center" v-if="loadingPage">
+                    <div class="flex flex-col items-center justify-center space-y-4">
+                        <div class="loading loading-bars loading-lg"></div>
+                        <article class="prose"><code>// Loading Content... </code></article>
+                    </div>
+                </div>
+                <div class="card shadow-xl w-96 max-tablet:w-80 glass">
+                    <figure><img :src="conjunctUrl(postsRaw[0]?.attributes.postCover?.data?.attributes?.url)" alt="Post Image"/></figure>
+                    <div class="card-body">
+                        <div class="text-md text-base-600 opacity-60">Post</div>
+                        <a class="font-bold text-2xl">{{postsRaw[0]?.attributes.postTitle}}</a>
+                        <div class="text-sm text-base-600">{{postsRaw[0]?.attributes.postContent?.substring(0,45) + '...'}}</div>
+                    </div>
                 </div>
             </div>
         </div>
