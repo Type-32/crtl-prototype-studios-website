@@ -64,10 +64,10 @@ function formatDateToMMMddYYYY(isoTimestamp: string): string {
             <img loading="lazy" :src="project?.data[0]?.attributes?.projectCover?.data?.attributes?.url" class="object-cover w-full h-72" alt="Project Cover Image"/>
         </div>
         <div class="w-full px-32 max-tablet:px-10 flex flex-col" id="article-content">
-            <div class="mt-8 flex-grow flex font-bold text-5xl text-center align-middle justify-center">{{ project?.data[0]?.attributes?.projectName }}</div>
+            <div class="mt-8 p-4 flex-grow flex font-bold text-5xl text-center align-middle justify-center">{{ project?.data[0]?.attributes?.projectName }}</div>
             <div class="object-contain flex flex-col items-center py-4">
                 <div class="divider w-full">
-                    Written By <span class="p-2 badge badge-primary badge-lg">{{project?.data[0]?.attributes?.projectAuthor.data?.attributes?.username}}</span>
+                    Created By <span class="p-2 badge badge-primary badge-lg">{{project?.data[0]?.attributes?.projectAuthor.data?.attributes?.username}}</span>
                 </div>
                 <article class="prose w-full mt-10 max-w-none" v-html="ProjectDesc"/>
             </div>
@@ -76,7 +76,6 @@ function formatDateToMMMddYYYY(isoTimestamp: string): string {
                     {{`Project created at ${formatDateToMMMddYYYY(project?.data[0]?.attributes?.createdAt)}`}}
                 </div>
             </div>
-
         </div>
     </div>
 </template>

@@ -12,8 +12,8 @@ const props = defineProps({
                 <img loading="lazy" :src="props.post?.attributes.postCover?.data?.attributes?.formats.small.url" alt="Post Image" class="laptop:h-32 laptop:w-40 max-tablet:w-full laptop: rounded-lg"/>
             </figure>
             <div class="card-body">
-                <a class="card-title transition duration-300">{{props.post?.attributes.postTitle}}</a>
-                <div class="text-sm transition duration-300">{{props.post?.attributes.postContent?.substring(0,80) + '...'}}</div>
+                <div class="card-title transition duration-300">{{props.post?.attributes.postTitle}}</div>
+                <div class="text-sm transition duration-300 text-base-content/70 line-clamp-1">{{props.post?.attributes.postContent?.substring(0,70)}}......</div>
             </div>
         </div>
     </div>

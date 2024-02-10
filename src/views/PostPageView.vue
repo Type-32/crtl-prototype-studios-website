@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {defineAsyncComponent, onBeforeMount, ref} from "vue";
+import {computed, defineAsyncComponent, onBeforeMount, ref} from "vue";
 import { useRoute, useRouter } from "vue-router";
 import axios from 'axios';
 import {conjunctUrl} from "@/scripts/api";
@@ -7,14 +7,20 @@ import {MdCatalog, MdPreview} from "md-editor-v3";
 import 'md-editor-v3/lib/preview.css';
 import Copyright from "@/components/CopyrightComponent.vue";
 import {marked} from "marked";
+import {useContentStore} from "@/stores/content";
 
 const $router = useRouter();
 const $route = useRoute();
 const post = ref<any>(null);
 const loadingPage = ref(false);
 const scrollElement = document.documentElement // for Markdown Catalog Renderer
+const $content = useContentStore()
+const allPosts = ref()
 
 const PostContent = ref("")
+
+let filteredPosts: any
+const randomPost = ref();
 
 onBeforeMount(async () => {
     loadingPage.value = true
@@ -33,6 +39,9 @@ onBeforeMount(async () => {
         } else {
             $router.push('404'); // Redirect to home page if post is not found
         }
+        allPosts.value = await $content.fetchPosts(true)
+        filteredPosts = allPosts.value?.data.filter((p: any) => p.postSlug !== post.value?.data[0].attributes.postSlug);
+        randomPost.value = filteredPosts[Math.floor(Math.random() * filteredPosts.length)];
     } catch (error: any) {
         console.error(`Error fetching post: ${error?.message}`);
         $router.push('404'); // Redirect to the home page if there's any error
@@ -77,6 +86,14 @@ function formatDateToMMMddYYYY(isoTimestamp: string): string {
                 <div class="h-fit px-3 mt-2 badge badge-lg badge-outline">
                     {{`Post created at ${formatDateToMMMddYYYY(post?.data[0]?.attributes?.createdAt)}`}}, {{`Last updated at ${formatDateToMMMddYYYY(post?.data[0]?.attributes?.updatedAt)}`}}
                 </div>
+            </div>
+            <div class="flex items-center flex-col mt-10">
+                <a :href="`/post/${randomPost?.attributes.postSlug}`" class="btn btn-lg flex-col flex py-8">
+                    <div>
+                        <div class="text-base-content/70 text-sm text-left font-normal">More Posts »</div>
+                        <div>{{ randomPost?.attributes.postTitle }}</div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
