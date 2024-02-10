@@ -6,41 +6,52 @@ import PostCard from "@/components/PostCard.vue";
 
 const $content = useContentStore()
 
+let rawData, maxPages: number;
 const projectsRaw = ref<any[]>([]);
-const paginatedProjects = ref<any[]>([]);
-const projectPageIndex = ref(0)
+const pageIndex = ref(1), pageLimit = ref(9)
 const loadingPage = ref(false)
 
 onMounted(async () => {
     loadingPage.value = true
-    projectsRaw.value = (await $content.fetchProjects(true)).data;
-    let tempPaginate: any[] = [];
-
-    for(let i: number = 1; i <= projectsRaw.value.length; i++) {
-        if(i % 8 == 0){
-            paginatedProjects.value.push(tempPaginate);
-            tempPaginate.length = 0;
-        }
-        tempPaginate.push(projectsRaw.value[i-1]);
-    }
-    paginatedProjects.value.push(tempPaginate);
-
-    console.log(paginatedProjects.value)
+    await refreshPage()
     loadingPage.value = false
 })
 
-function setPageIndex(num: number) { projectPageIndex.value = num }
+async function refreshPage(){
+    rawData = await $content.fetchPaginatedProjects(pageIndex.value, pageLimit.value)
+    maxPages = rawData.meta.pagination?.pageCount || 1
+    projectsRaw.value = rawData.data
+
+}
+
+function nextPage(){
+    if(pageIndex.value >= maxPages){
+        pageIndex.value = maxPages
+    }else{
+        pageIndex.value++
+        refreshPage()
+    }
+}
+
+function previousPage(){
+    if(pageIndex.value <= 1){
+        pageIndex.value = 1
+    }else{
+        pageIndex.value--
+        refreshPage()
+    }
+}
 </script>
 
 <template>
     <div class="px-32 max-tablet:px-10">
-        <h1 class="pt-8 font-bold text-4xl">Projects</h1>
-        <div class="divider"/>
+        <h1 class="mt-16 font-bold text-4xl">Projects</h1>
+        <div class="text-base-content/70 mb-8 mt-2">Up-to-date latest projects from CRTL Prototype Studios. Here lists out all of our projects that we've worked on or are working on. Interesting stuff.</div>
         <div class="grid grid-cols-3 w-full py-5 gap-5 max-tablet:grid-cols-1 max-tablet:gap-10">
-            <div class="hover:bg-primary group card shadow-md hover:shadow-lg hover:scale-[1.01] transition duration-300 cursor-pointer glass" v-for="(project, projectIndex) in paginatedProjects[projectPageIndex]" :key="projectIndex" @click="$router.push(`/project/${project?.attributes?.projectSlug}`)">
-                <figure><img :src="conjunctUrl(project?.attributes?.projectCover?.data?.attributes?.url)"/></figure>
+            <div class="hover:bg-primary group card shadow-md hover:shadow-lg hover:scale-[1.01] transition duration-300 cursor-pointer glass" v-for="(project, projectIndex) in projectsRaw" :key="projectIndex" @click="$router.push(`/project/${project?.attributes?.projectSlug}`)">
+                <figure><img loading="lazy" :src="project?.attributes?.projectCover?.data?.attributes?.url" alt="Project Cover Image"/></figure>
                 <div class="card-body">
-                    <h1 class="card-title group-hover:text-white transition duration-300">{{project?.attributes?.projectTitle}}</h1>
+                    <h1 class="card-title group-hover:text-white transition duration-300">{{project?.attributes?.projectName}}</h1>
                     <span class="group-hover:text-white/80 transition duration-300">{{project?.attributes?.projectDescription.substring(0,100) + '...'}}</span>
                     <div class="card-actions justify-end">
                         <span class="badge badge-primary group-hover:badge-neutral" v-if="project?.attributes?.isInEarlyAccess">Early Access</span>
@@ -50,7 +61,9 @@ function setPageIndex(num: number) { projectPageIndex.value = num }
             </div>
         </div>
         <div class="w-full mt-20 justify-center join">
-            <input v-for="(projects, projectsIndex) in paginatedProjects" :key="projectsIndex" class="join-item btn btn-square" type="radio" name="options" :aria-label="`${projectsIndex + 1}`" checked @click="setPageIndex(projectsIndex)"/>
+            <button class="join-item btn" @click="previousPage()">«</button>
+            <button class="join-item btn">Page {{pageIndex}}</button>
+            <button class="join-item btn" @click="nextPage()">»</button>
         </div>
     </div>
 </template>

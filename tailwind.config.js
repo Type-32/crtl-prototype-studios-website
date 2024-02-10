@@ -17,6 +17,20 @@ export default {
   // eslint-disable-next-line no-undef
   plugins: [require("@tailwindcss/typography"), require("daisyui")],
   daisyui: {
-    themes: ["light", "dark", "cupcake"],
+    themes: ["light", "dark", "cupcake", "retro",
+      {
+        infminecraft: {
+          "primary": "#4ade80",
+          "secondary": "#22c55e",
+          "accent": "#a3e635",
+          "neutral": "#374151",
+          "base-100": "#1f2937",
+          "info": "#3b82f6",
+          "success": "#5eead4",
+          "warning": "#ea580c",
+          "error": "#dc2626",
+        },
+      },
+    ],
   },
 };

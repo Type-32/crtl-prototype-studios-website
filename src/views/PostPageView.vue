@@ -57,9 +57,13 @@ function formatDateToMMMddYYYY(isoTimestamp: string): string {
 </script>
 
 <template>
-    <div class="flex flex-col w-full min-h-screen items-center">
+    <div class="flex flex-col items-center min-h-screen justify-center" v-if="loadingPage">
+        <span class="loading loading-bars loading-lg"/>
+        <div class="text-base-content/70">Content is loading...</div>
+    </div>
+    <div class="flex flex-col w-full min-h-screen items-center" v-else>
         <div class="object-cover w-full">
-            <img :src="conjunctUrl(post?.data[0]?.attributes?.postCover?.data?.attributes?.url)" class="object-cover w-full h-40"/>
+            <img loading="lazy" :src="post?.data[0]?.attributes?.postCover?.data?.attributes?.url" class="object-cover w-full h-40" alt="Post Page Cover"/>
         </div>
         <div class="w-full px-32 max-tablet:px-10 flex flex-col" id="article-content">
             <h1 class="mt-8 p-4 w-full font-bold text-5xl text-center">{{ post?.data[0]?.attributes?.postTitle }}</h1>
@@ -69,12 +73,11 @@ function formatDateToMMMddYYYY(isoTimestamp: string): string {
                 </div>
                 <article class="prose w-full mt-10 max-w-none" v-html="PostContent"/>
             </div>
-            <div class="flex items-center flex-col">
+            <div class="flex items-center flex-col mt-10">
                 <div class="h-fit px-3 mt-2 badge badge-lg badge-outline">
                     {{`Post created at ${formatDateToMMMddYYYY(post?.data[0]?.attributes?.createdAt)}`}}, {{`Last updated at ${formatDateToMMMddYYYY(post?.data[0]?.attributes?.updatedAt)}`}}
                 </div>
             </div>
-
         </div>
     </div>
 </template>

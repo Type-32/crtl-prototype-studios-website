@@ -1,7 +1,11 @@
 import {defineStore} from "pinia";
 import {joinUrl} from "@/scripts/api";
 import axios from "axios";
-import type {Post, Project, Payload, StoreState} from "@/scripts/interfaces/types";
+import type {StoreState} from "@/scripts/interfaces/types";
+import type {Payload} from "@/scripts/interfaces/defaults/Payload";
+import type {Post} from "@/scripts/interfaces/post";
+import type {Project} from "@/scripts/interfaces/project";
+import type {Gallery} from "@/scripts/interfaces/gallery";
 
 export const useContentStore = defineStore({
     id: 'contentStore',
@@ -13,6 +17,10 @@ export const useContentStore = defineStore({
         projects: {
             data: [],
             meta: {} // replace with your default meta object
+        },
+        galleries: {
+            data: [],
+            meta: {}
         }
     }),
     actions: {
@@ -43,6 +51,53 @@ export const useContentStore = defineStore({
                 }
             }
             return this.projects;
+        },
+        async fetchGalleries(forceRefresh: boolean = false): Promise<Payload<Gallery[]>>{
+            let galleries: Payload<Gallery[]> = { data: [], meta: {} };
+            if(forceRefresh || this.galleries.data.length === 0) {
+                try {
+                    await axios.get(joinUrl(["api","galleries"])).then((response) => {
+                        galleries = { data: response.data.data, meta: response.data.meta };
+                        this.galleries = galleries;
+                    });
+                } catch(error) {
+                    console.error('Error fetching galleries:', error);
+                }
+            }
+            return this.galleries;
+        },
+        async fetchPaginatedPosts(page: number, pageLimit: number = 10): Promise<Payload<Post[]>>{
+            let posts: Payload<any[]> = { data: [], meta: {} };
+            try {
+                await axios.get(joinUrl(["api","posts"], `?pagination[page]=${page}&pagination[pageSize]=${pageLimit}`)).then((response) => {
+                    posts = { data: response.data.data, meta: response.data.meta };
+                });
+            } catch(error) {
+                console.error('Error fetching paginated posts:', error);
+            }
+            return posts;
+        },
+        async fetchPaginatedProjects(page: number, pageLimit: number = 10): Promise<Payload<Project[]>>{
+            let projects: Payload<any[]> = { data: [], meta: {} };
+            try {
+                await axios.get(joinUrl(["api","projects"], `?pagination[page]=${page}&pagination[pageSize]=${pageLimit}`)).then((response) => {
+                    projects = { data: response.data.data, meta: response.data.meta };
+                });
+            } catch(error) {
+                console.error('Error fetching paginated projects:', error);
+            }
+            return projects;
+        },
+        async fetchPaginatedGalleries(page: number, pageLimit: number = 10): Promise<Payload<Gallery[]>>{
+            let galleries: Payload<any[]> = { data: [], meta: {} };
+            try {
+                await axios.get(joinUrl(["api","galleries"], `?pagination[page]=${page}&pagination[pageSize]=${pageLimit}`)).then((response) => {
+                    galleries = { data: response.data.data, meta: response.data.meta };
+                });
+            } catch(error) {
+                console.error('Error fetching paginated galleries:', error);
+            }
+            return galleries;
         }
     }
 })

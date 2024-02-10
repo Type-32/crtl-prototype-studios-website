@@ -1,8 +1,25 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import {conjunctUrl} from "@/scripts/api";
+import {onMounted} from "vue";
 
-function toGithub(){
+function handleThemeChange(theme: string) {
+    document.documentElement.setAttribute('data-theme', theme); // Apply theme
+    localStorage.setItem('theme', theme); // Store theme in localStorage
+}
+
+function applySavedTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        handleThemeChange(savedTheme);
+    }
+}
+
+onMounted(() => {
+    applySavedTheme();
+});
+
+function toGithub() {
     window.open('https://github.com/Type-32/crtl-prototype-studios-website')
 }
 </script>
@@ -53,8 +70,9 @@ function toGithub(){
                                     <svg width="12px" height="12px" class="h-2 w-2 fill-current opacity-60 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048"><path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path></svg>
                                 </div>
                                 <ul tabindex="0" class="dropdown-content z-[1] p-2 shadow-2xl backdrop-blur-xl bg-base-200 rounded-box w-fit gap-1.5 flex flex-col mt-2">
-                                    <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Default" value="default"/></li>
-                                    <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Dark" value="dark"/></li>
+                                    <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Default" value="light" @click="handleThemeChange('light')"/></li>
+                                    <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Dark" value="dark" @click="handleThemeChange('dark')"/></li>
+                                    <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Retro" value="retro" @click="handleThemeChange('retro')"/></li>
                                 </ul>
                             </div>
                             <a class="btn btn-outline group" @click="toGithub()">
@@ -72,7 +90,7 @@ function toGithub(){
                 <div class="">
                     <RouterView />
                 </div>
-                <footer class="footer p-10 bg-base-200 text-base-content mt-40">
+                <footer class="footer p-10 bg-base-200 text-base-content mt-20">
                     <aside>
                         <div class="object-contain size-16 mb-3">
                             <img src="/src/assets/CRTL_v2_new_nobg_512.png"/>
@@ -81,13 +99,13 @@ function toGithub(){
                     </aside>
                     <nav>
                         <h6 class="footer-title">Services</h6>
-                        <a class="link link-hover">Products</a>
-                        <a class="link link-hover">Designs</a>
-                        <a class="link link-hover">Blogs</a>
+                        <a class="link link-hover" href="/posts">Posts</a>
+                        <a class="link link-hover" href="/projects">Projects</a>
+                        <a class="link link-hover" href="/galleries">Galleries</a>
                     </nav>
                     <nav>
                         <h6 class="footer-title">Company</h6>
-                        <a class="link link-hover">About us</a>
+                        <a class="link link-hover" href="/">About us</a>
                         <a class="link link-hover">Contact</a>
                     </nav>
                     <nav>

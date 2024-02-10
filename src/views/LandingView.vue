@@ -51,10 +51,10 @@ onMounted(async () => {
                     </div>
                 </div>
                 <div class="card shadow-xl w-96 max-tablet:w-80 glass">
-                    <figure><img :src="conjunctUrl(projectsRaw[0]?.attributes.projectCover?.data?.attributes?.url)" alt="Post Image"/></figure>
+                    <figure><img :src="projectsRaw[0]?.attributes.projectCover?.data?.attributes?.url" alt="Post Image"/></figure>
                     <div class="card-body">
                         <div class="text-md text-base-600 opacity-60">Project</div>
-                        <a class="font-bold text-2xl">{{projectsRaw[0]?.attributes.projectTitle}}</a>
+                        <a class="font-bold text-2xl">{{projectsRaw[0]?.attributes.projectName}}</a>
                         <div class="text-sm text-base-600">{{projectsRaw[0]?.attributes.projectDescription?.substring(0,45) + '...'}}</div>
                     </div>
                 </div>
@@ -85,7 +85,7 @@ onMounted(async () => {
                     </div>
                 </div>
                 <div class="card shadow-xl w-96 max-tablet:w-80 glass">
-                    <figure><img :src="conjunctUrl(postsRaw[0]?.attributes.postCover?.data?.attributes?.url)" alt="Post Image"/></figure>
+                    <figure><img :src="postsRaw[0]?.attributes.postCover?.data?.attributes?.url" alt="Post Image"/></figure>
                     <div class="card-body">
                         <div class="text-md text-base-600 opacity-60">Post</div>
                         <a class="font-bold text-2xl">{{postsRaw[0]?.attributes.postTitle}}</a>
