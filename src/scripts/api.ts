@@ -6,10 +6,5 @@ export function joinUrl(params: string[], opts: string = "", populate: boolean =
         });
     }
     master += opts;
-    return master + (populate ? master.indexOf('?') != -1 ? "&populate=*" : "?populate=*" : "");
-}
-
-export function conjunctUrl(param: string | any): string {
-    if (param?.toString()[0] == '/') return import.meta.env.VITE_CMS_URL + param?.toString();
-    return import.meta.env.VITE_CMS_URL + '/' + param?.toString();
+    return master + (populate ? master.indexOf('?') !== -1 ? "&populate=*" : "?populate=*" : "");
 }

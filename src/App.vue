@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import {conjunctUrl} from "@/scripts/api";
+import { RouterView } from 'vue-router'
 import {onMounted} from "vue";
 
 function handleThemeChange(theme: string) {

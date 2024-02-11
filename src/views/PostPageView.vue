@@ -2,10 +2,6 @@
 import {computed, defineAsyncComponent, onBeforeMount, ref} from "vue";
 import { useRoute, useRouter } from "vue-router";
 import axios from 'axios';
-import {conjunctUrl} from "@/scripts/api";
-import {MdCatalog, MdPreview} from "md-editor-v3";
-import 'md-editor-v3/lib/preview.css';
-import Copyright from "@/components/CopyrightComponent.vue";
 import {marked} from "marked";
 import {useContentStore} from "@/stores/content";
 

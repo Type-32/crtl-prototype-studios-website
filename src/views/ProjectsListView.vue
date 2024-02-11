@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import {useContentStore} from "@/stores/content";
 import {onMounted, ref} from "vue";
-import {conjunctUrl} from "@/scripts/api";
-import PostCard from "@/components/PostCard.vue";
 
 const $content = useContentStore()
 

@@ -56,7 +56,7 @@ export const useContentStore = defineStore({
             let galleries: Payload<Gallery[]> = { data: [], meta: {} };
             if(forceRefresh || this.galleries.data.length === 0) {
                 try {
-                    await axios.get(joinUrl(["api","galleries"])).then((response) => {
+                    await axios.get(joinUrl(["api","galleries"], "?populate[0]=galleryContent.framePiece&populate[1]=galleryContent.motionPiece&populate[2]=galleryContent.motionCover&populate[3]=galleryContent.trackPiece&populate[4]=galleryContent.trackCover&populate[5]=galleryAuthors", false)).then((response) => {
                         galleries = { data: response.data.data, meta: response.data.meta };
                         this.galleries = galleries;
                     });

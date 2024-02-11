@@ -2,8 +2,6 @@
 import {onBeforeMount, ref} from "vue";
 import { useRoute, useRouter } from "vue-router";
 import axios from 'axios';
-import {conjunctUrl} from "@/scripts/api";
-import Copyright from "@/components/CopyrightComponent.vue";
 import {marked} from "marked";
 
 const $router = useRouter();

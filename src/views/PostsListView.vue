@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {useContentStore} from "@/stores/content";
 import {computed, onMounted, ref} from "vue";
-import {conjunctUrl} from "@/scripts/api";
 import PostCard from "@/components/PostCard.vue";
 import type {Post} from "@/scripts/interfaces/post";
 import type {Payload} from "@/scripts/interfaces/defaults/Payload";
@@ -44,7 +43,6 @@ async function refreshPage(){
     allPosts.value = await $content.fetchPosts(true)
     rawData = await $content.fetchPaginatedPosts(postPage.value, pageLimit.value);
     maxPages.value = rawData.meta.pagination?.pageCount
-    console.log(rawData.meta)
     postsRaw.value = rawData.data
 }
 

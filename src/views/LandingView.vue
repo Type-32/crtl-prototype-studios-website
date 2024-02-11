@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
 import {useContentStore} from "@/stores/content";
-import type {Post, Project} from "@/scripts/interfaces/types";
-import {conjunctUrl} from "@/scripts/api";
 
 const $content = useContentStore()
 
