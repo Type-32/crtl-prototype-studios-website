@@ -20,7 +20,7 @@ onBeforeMount(async () => {
     }
 
     try {
-        await axios.get(`https://cms.crtl-prototype-studios.cn/api/projects?filters[projectSlug][$eq]=${$route.params.slug}&populate=*`).then((response) => {
+        await axios.get(`${import.meta.env.VITE_CMS_URL}/api/projects?filters[projectSlug][$eq]=${$route.params.slug}&populate=*`).then((response) => {
             project.value = { data: response.data.data, meta: response.data.meta };
         });
         if (project.value) {
@@ -29,7 +29,7 @@ onBeforeMount(async () => {
             $router.push('404'); // Redirect to home page if post is not found
         }
     } catch (error: any) {
-        // console.error(`Error fetching post: ${error?.message}`);
+        console.error(`Error fetching post: ${error?.message}`);
         $router.push('404'); // Redirect to the home page if there's any error
     }
 
