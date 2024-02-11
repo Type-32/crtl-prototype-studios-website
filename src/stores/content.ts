@@ -33,7 +33,7 @@ export const useContentStore = defineStore({
                         this.posts = posts;
                     });
                 } catch(error) {
-                    console.error('Error fetching posts:', error);
+                    // console.error('Error fetching posts:', error);
                 }
             }
             return this.posts;
@@ -47,7 +47,7 @@ export const useContentStore = defineStore({
                         this.projects = projects;
                     });
                 } catch(error) {
-                    console.error('Error fetching projects:', error);
+                    // console.error('Error fetching projects:', error);
                 }
             }
             return this.projects;
@@ -61,7 +61,7 @@ export const useContentStore = defineStore({
                         this.galleries = galleries;
                     });
                 } catch(error) {
-                    console.error('Error fetching galleries:', error);
+                    // console.error('Error fetching galleries:', error);
                 }
             }
             return this.galleries;
@@ -73,7 +73,7 @@ export const useContentStore = defineStore({
                     posts = { data: response.data.data, meta: response.data.meta };
                 });
             } catch(error) {
-                console.error('Error fetching paginated posts:', error);
+                // console.error('Error fetching paginated posts:', error);
             }
             return posts;
         },
@@ -84,7 +84,7 @@ export const useContentStore = defineStore({
                     projects = { data: response.data.data, meta: response.data.meta };
                 });
             } catch(error) {
-                console.error('Error fetching paginated projects:', error);
+                // console.error('Error fetching paginated projects:', error);
             }
             return projects;
         },
@@ -95,7 +95,7 @@ export const useContentStore = defineStore({
                     galleries = { data: response.data.data, meta: response.data.meta };
                 });
             } catch(error) {
-                console.error('Error fetching paginated galleries:', error);
+                // console.error('Error fetching paginated galleries:', error);
             }
             return galleries;
         }

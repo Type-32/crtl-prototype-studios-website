@@ -39,7 +39,7 @@ onBeforeMount(async () => {
         filteredPosts = allPosts.value?.data.filter((p: any) => p.postSlug !== post.value?.data[0].attributes.postSlug);
         randomPost.value = filteredPosts[Math.floor(Math.random() * filteredPosts.length)];
     } catch (error: any) {
-        console.error(`Error fetching post: ${error?.message}`);
+        // console.error(`Error fetching post: ${error?.message}`);
         $router.push('404'); // Redirect to the home page if there's any error
     }
 

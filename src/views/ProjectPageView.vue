@@ -29,7 +29,7 @@ onBeforeMount(async () => {
             $router.push('404'); // Redirect to home page if post is not found
         }
     } catch (error: any) {
-        console.error(`Error fetching post: ${error?.message}`);
+        // console.error(`Error fetching post: ${error?.message}`);
         $router.push('404'); // Redirect to the home page if there's any error
     }
 
