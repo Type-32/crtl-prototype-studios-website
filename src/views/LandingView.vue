@@ -14,8 +14,8 @@ onMounted(async () => {
     loadingPage.value = true
     postsRaw.value = (await $content.fetchPosts(true)).data;
     projectsRaw.value = (await $content.fetchProjects(true)).data;
-    console.log(postsRaw)
-    console.log(projectsRaw)
+    console.log(postsRaw.value)
+    console.log(projectsRaw.value)
     loadingPage.value = false
 })
 </script>
