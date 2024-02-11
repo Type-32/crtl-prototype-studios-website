@@ -82,7 +82,7 @@ function handleSearch(){
             </div>
             <div class="flex flex-col" v-else>
                 <input class="input input-bordered w-full mb-4" v-model="searchQuery" @input="handleSearch()" type="text" placeholder="Search Post...">
-                <div class="w-full grid grid-cols-1 flex-col-reverse shadow-lg max-tablet:shadow-transparent max-tablet:gap-5 bg-transparent rounded-2xl">
+                <div class="w-full flex-col-reverse flex shadow-lg max-tablet:shadow-transparent max-tablet:gap-5 bg-transparent rounded-2xl">
                     <PostCard v-for="(post, postIndex) in displayPosts()" :key="postIndex" :post="post"
                               class="w-full cursor-pointer hover:scale-[1.01] hover:shadow-2xl duration-200 rounded-2xl bg-base-100 max-tablet:shadow-lg"
                               @click="$router.push('/post/' + post?.attributes?.postSlug)"/>
