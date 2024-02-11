@@ -45,7 +45,11 @@ function previousPage(){
     <div class="px-32 max-tablet:px-10">
         <h1 class="mt-16 font-bold text-4xl">Projects</h1>
         <div class="text-base-content/70 mb-8 mt-2">Up-to-date latest projects from CRTL Prototype Studios. Here lists out all of our projects that we've worked on or are working on. Interesting stuff.</div>
-        <div class="grid grid-cols-3 w-full py-5 gap-5 max-tablet:grid-cols-1 max-tablet:gap-10">
+        <div class="flex flex-col items-center justify-center" v-if="loadingPage">
+            <span class="loading loading-bars loading-lg"/>
+            <div class="text-base-content/70">Loading projects...</div>
+        </div>
+        <div class="grid grid-cols-3 w-full py-5 gap-5 max-tablet:grid-cols-1 max-tablet:gap-10" v-else>
             <div class="hover:bg-primary group card shadow-md hover:shadow-lg hover:scale-[1.01] transition duration-300 cursor-pointer glass" v-for="(project, projectIndex) in projectsRaw" :key="projectIndex" @click="$router.push(`/project/${project?.attributes?.projectSlug}`)">
                 <figure><img loading="lazy" :src="project?.attributes?.projectCover?.data?.attributes?.url" alt="Project Cover Image"/></figure>
                 <div class="card-body">
