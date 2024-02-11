@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
 import {useContentStore} from "@/stores/content";
+import type {Post} from "@/scripts/interfaces/post";
+import type {Project} from "@/scripts/interfaces/project";
 
 const $content = useContentStore()
 
-const postsRaw = ref<any[]>([]);
-const projectsRaw = ref<any[]>([]);
+const postsRaw = ref<Post[]>([]);
+const projectsRaw = ref<Project[]>([]);
 const loadingPage = ref(false)
 
 onMounted(async () => {
@@ -51,7 +53,7 @@ onMounted(async () => {
                     </div>
                 </div>
                 <div class="card shadow-xl w-96 max-tablet:w-80 glass">
-                    <figure><img :src="projectsRaw[0]?.attributes.projectCover?.data?.attributes?.url" alt="Post Image"/></figure>
+                    <figure><img :src="projectsRaw[0]?.attributes?.projectCover?.data?.attributes?.url || ''" alt="Post Image"/></figure>
                     <div class="card-body">
                         <div class="text-md text-base-600 opacity-60">Project</div>
                         <a class="font-bold text-2xl">{{projectsRaw[0]?.attributes.projectName}}</a>
@@ -85,7 +87,7 @@ onMounted(async () => {
                     </div>
                 </div>
                 <div class="card shadow-xl w-96 max-tablet:w-80 glass">
-                    <figure><img :src="postsRaw[0]?.attributes.postCover?.data?.attributes?.url" alt="Post Image"/></figure>
+                    <figure><img :src="postsRaw[0]?.attributes?.postCover?.data?.attributes?.url || ''" alt="Post Image"/></figure>
                     <div class="card-body">
                         <div class="text-md text-base-600 opacity-60">Post</div>
                         <a class="font-bold text-2xl">{{postsRaw[0]?.attributes.postTitle}}</a>
