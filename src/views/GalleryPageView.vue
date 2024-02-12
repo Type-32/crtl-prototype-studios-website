@@ -5,6 +5,8 @@ import axios from 'axios';
 import {marked} from "marked";
 import {useContentStore} from "@/stores/content";
 import ThemeCard from "@/components/ThemeCard.vue";
+import image from "@/assets/image.svg";
+import info from "@/assets/info.svg";
 
 const themeCards = [
     {
@@ -49,6 +51,10 @@ const loadingPage = ref(false);
 const $content = useContentStore()
 const $pageState = ref<GuideState>(GuideState.AlreadySelected)
 const $selectedTheme = ref('')
+
+const contentPieces = ref<any[]>([])
+const contentPieceIndex = ref<number>(0) // Switches betweem tje
+const contentSelection = ref('img') // Switches between the content panels
 
 onBeforeMount(async () => {
     loadingPage.value = true
@@ -97,8 +103,23 @@ async function loadData(){
             gallery.value = { data: response.data.data, meta: response.data.meta };
         });
         if (gallery.value) {
-            loadingPage.value = false
+            $pageState.value = GuideState.InView
             console.log("Gallery Data Fetched... Initializing")
+
+            gallery.value.data[0]?.attributes.galleryContent.forEach((item: any) => {
+                contentPieces.value.push({
+                    title: item.frameTitle || item.motionTitle || item.trackTitle || 'Untitled Piece',
+                    context: item.frameContext || item.motionContext || item.trackContext || 'May there be dragons here...',
+                    piece: item.framePiece.data.attributes.url || item.motionPiece.data.attributes.url || item.trackPiece.data.attributes.url || null,
+                    cover: item.framePiece.data.attributes.url || item.motionCover.data.attributes.url || item.trackCover.data.attributes.url || null,
+                    type: item.__component || ''
+                })
+            })
+
+            console.log("Initialized.")
+            console.log(contentPieces.value)
+
+            loadingPage.value = false
         } else {
             $router.push('404'); // Redirect to home page if post is not found
         }
@@ -134,6 +155,37 @@ async function loadData(){
             <div class="fade-in-from-bottom flex flex-row gap-5">
                 <button class="btn btn-primary" @click="confirmTheme()">Yes, Continue with my Choices!</button>
                 <button class="btn" @click="$pageState = GuideState.SelectingTheme">No, I want to review my Choices...</button>
+            </div>
+        </div>
+        <div class="w-full flex-grow items-center px-10 py-5 flex flex-col gap-5" v-else>
+            <div class="text-center">
+                <div class="text-lg font-bold text-base-content">{{ contentPieces[contentPieceIndex].title }}</div>
+                <div class="text-base-content/70 text-sm">{{ contentPieceIndex + 1 }} of {{contentPieces.length}} in the Gallery</div>
+            </div>
+            <div class="flex-grow">
+                <div class="glass bg-base-200 w-full h-full p-5 rounded-box">
+                    <img :src="contentPieces[contentPieceIndex].cover" :class="`transition duration-300 ${contentSelection == 'ctx' ? 'opacity-50' : 'opacity-100'}`"/>
+                    <div :class="`flex flex-col inset-0 absolute items-center justify-center transition duration-300 ${contentSelection == 'ctx' ? 'opacity-100' : 'opacity-0'}`">
+                        <div class="text-center rounded-box bg-base-200 p-5">{{ contentPieces[contentPieceIndex].context }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full flex flex-row">
+                <button class="btn flex-row flex group items-center transition duration-300" :disabled="contentPieceIndex <= 0">
+                    <div class="text-md group-hover:-translate-x-1 -mr-1 transition duration-300"> {{ '<' }} </div>
+                    <div class="text-md text-left font-normal">Previous Item</div>
+                </button>
+                <div class="flex-grow flex justify-center">
+                    <div class="join items-center">
+                        <input class="btn join-item" type="radio" value="img" aria-label="Image" v-model="contentSelection"/>
+                        <input v-if="contentPieces[contentPieceIndex].type != 'gallery-content-types.frame'" class="btn join-item" type="radio" value="itm" :aria-label="contentPieces[contentPieceIndex].type == 'gallery-content-types.motion' ? 'Motion' : 'Track'" v-model="contentSelection"/>
+                        <input class="btn join-item" type="radio" value="ctx" aria-label="Context" v-model="contentSelection"/>
+                    </div>
+                </div>
+                <button class="btn flex-row flex group items-center transition duration-300" :disabled="contentPieces.length <= contentPieceIndex + 1">
+                    <div class="text-md text-left font-normal">Next Item</div>
+                    <div class="text-md group-hover:translate-x-1 -ml-1 transition duration-300"> {{ '>' }} </div>
+                </button>
             </div>
         </div>
     </div>
