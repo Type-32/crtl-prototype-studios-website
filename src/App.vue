@@ -27,7 +27,7 @@ function toGithub() {
     <div class="w-full min-h-screen">
         <div class="drawer bg-base-100">
             <div class="drawer-content">
-                <div class="top-0 z-30 sticky backdrop-blur bg-base-100 bg-opacity-80 flex shadow-sm">
+                <div class="top-0 z-30 sticky backdrop-blur bg-base-100 bg-opacity-80 flex shadow-sm" v-if="!$route.path.startsWith('/gallery')">
                     <nav class="navbar w-full">
                         <div class="navbar-start">
                             <!--                        Dropdown show for cell phone compatability -->
