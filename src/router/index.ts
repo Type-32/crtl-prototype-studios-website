@@ -4,7 +4,8 @@ import PostsListView from "@/views/PostsListView.vue";
 import PostPageView from "@/views/PostPageView.vue";
 import ProjectsListView from "@/views/ProjectsListView.vue";
 import ProjectPageView from "@/views/ProjectPageView.vue";
-import GalleriesView from "@/views/GalleriesView.vue";
+import GalleriesView from "@/views/GalleriesListView.vue";
+import GalleryPageView from "@/views/GalleryPageView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,6 +37,10 @@ const router = createRouter({
     {
       path: '/project/:slug',
       component: ProjectPageView
+    },
+    {
+      path: '/gallery/:slug',
+      component: GalleryPageView
     },
     {
       path: '/404',
