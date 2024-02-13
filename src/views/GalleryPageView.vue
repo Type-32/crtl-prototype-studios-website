@@ -156,9 +156,14 @@ function previousItem(){
         <div class="text-base-content/70">Content is loading...</div>
     </div>
     <div class="flex flex-col w-full h-full items-center" v-else>
-
 <!--        Theme Selection Section-->
         <div class="flex-grow flex flex-col items-center justify-center gap-5 min-h-screen" v-if="$pageState == GuideState.SelectingTheme">
+            <div class="px-5 laptop:hidden fade-in-from-top">
+                <div role="alert" class="alert alert-warning">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                    <span>Wider screens generally has better Gallery viewing experience.</span>
+                </div>
+            </div>
             <div class="fade-in-from-top text-center text-base-content/70 text-lg">Select your viewing theme</div>
             <div class="grid grid-cols-3 fade-in-from-bottom gap-5 max-tablet:grid-cols-2">
                 <ThemeCard v-for="(card, cardIndex) in themeCards" :key="cardIndex"
@@ -172,6 +177,12 @@ function previousItem(){
 
 <!--        Confirm Theme Selection with Pre-existing Config-->
         <div class="flex-grow flex flex-col items-center justify-center gap-5 min-h-screen " v-else-if="$pageState == GuideState.AlreadySelected">
+            <div class="px-5 laptop:hidden fade-in-from-top">
+                <div role="alert" class="alert alert-warning">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                    <span>Wider screens generally has better Gallery viewing experience.</span>
+                </div>
+            </div>
             <div class="fade-in-from-top text-center text-base-content/70 text-lg">
                 <ThemeCard :theme="getExistingTheme()" class="mb-5"/>
                 <p>You have already selected a view theme previously. Do you want to continue?</p>
