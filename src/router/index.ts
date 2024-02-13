@@ -43,6 +43,18 @@ const router = createRouter({
       component: GalleryPageView
     },
     {
+      path: '/post/404',
+      component: LandingView
+    },
+    {
+      path: '/project/404',
+      component: LandingView
+    },
+    {
+      path: '/gallery/404',
+      component: LandingView
+    },
+    {
       path: '/404',
       name: '404',
       component: LandingView

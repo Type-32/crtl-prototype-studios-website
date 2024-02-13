@@ -49,6 +49,7 @@ const getExistingTheme = () => {return localStorage.getItem('gallery-view-theme'
 const $router = useRouter();
 const $route = useRoute();
 const gallery = ref<any>(null);
+const galleryAuthors = ref<any>([]);
 const loadingPage = ref(false);
 const $content = useContentStore()
 const $pageState = ref<GuideState>(GuideState.AlreadySelected)
@@ -118,6 +119,10 @@ async function loadData(){
                     mime: item.motionPiece?.data?.attributes?.mime || item.trackPiece?.data?.attributes?.mime || null,
                     type: item.__component || ''
                 });
+            })
+
+            gallery.value.data[0]?.attributes.galleryAuthors?.data?.forEach((author: any) => {
+                galleryAuthors.value.push(author?.attributes?.username)
             })
 
             console.log("Initialized.")
@@ -237,6 +242,8 @@ function previousItem(){
 
 <!--            Exit Gallery Button-->
             <button class="btn btn-ghost btn-sm" onclick="exitGalleryModal.showModal()">Exit Gallery</button>
+
+            <div class="text-sm text-base-content/70">Viewing Gallery <b class="text-base-content/100">{{ gallery.data[0]?.attributes.galleryTitle }}</b>, by {{ galleryAuthors?.toString() }}</div>
 
 <!--            Confirm Exit Modal-->
             <dialog id="exitGalleryModal" class="modal">
