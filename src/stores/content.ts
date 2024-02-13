@@ -28,7 +28,6 @@ export const useContentStore = defineStore({
             let posts: Payload<any[]> = { data: [], meta: {} };
             if(forceRefresh || this.posts.data.length === 0) {
                 try {
-                    console.log(joinUrl(["api","posts"]))
                     await axios.get(joinUrl(["api","posts"])).then((response) => {
                         posts = { data: response.data.data, meta: response.data.meta };
                         this.posts = posts;
