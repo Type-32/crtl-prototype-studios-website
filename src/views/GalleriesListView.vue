@@ -7,17 +7,44 @@ import type {Gallery} from "@/scripts/interfaces/gallery";
 const $content = useContentStore()
 const rawGalleries = ref()
 const galleries = ref<Gallery[]>([])
+const pageIndex = ref(1), pageLimit = ref(9)
+let maxPages: number;
 
 const loadingPage = ref(false)
+
+async function refreshPage(){
+    rawGalleries.value = await $content.fetchPaginatedGalleries(pageIndex.value, pageLimit.value)
+    maxPages = rawGalleries.value.meta.pagination?.pageCount || 1
+    galleries.value = rawGalleries.value.data
+    galleries.value = galleries.value.reverse()
+    console.log(galleries.value)
+}
 
 onMounted(async () => {
     loadingPage.value = true
 
-    rawGalleries.value = await $content.fetchGalleries(true)
-    galleries.value = rawGalleries.value.data
+    await refreshPage()
 
     loadingPage.value = false;
 })
+
+function nextPage(){
+    if(pageIndex.value >= maxPages){
+        pageIndex.value = maxPages
+    }else{
+        pageIndex.value++
+        refreshPage()
+    }
+}
+
+function previousPage(){
+    if(pageIndex.value <= 1){
+        pageIndex.value = 1
+    }else{
+        pageIndex.value--
+        refreshPage()
+    }
+}
 </script>
 
 <template>
@@ -30,8 +57,13 @@ onMounted(async () => {
             <span class="loading loading-bars loading-lg"/>
             <div class="text-base-content/70">Loading projects...</div>
         </div>
-        <div class="flex-grow grid-cols-3 grid flex-row gap-5 gap-y-10 fade-in-from-top" v-else>
-            <GalleryCard :gallery="gallery" v-for="(gallery, galleryIndex) in galleries.reverse()" :key="galleryIndex" @click="$router.push(`/gallery/${gallery.attributes.gallerySlug}`)"/>
+        <div class="flex-grow grid-cols-3 max-tablet:grid-cols-1 max-tablet:gap-1 max-tablet:mt-2 grid flex-row gap-5 gap-y-10 fade-in-from-top" v-else>
+            <GalleryCard :gallery="gallery" v-for="(gallery, galleryIndex) in galleries" :key="galleryIndex" @click="$router.push(`/gallery/${gallery.attributes.gallerySlug}`)"/>
+        </div>
+        <div class="w-full mt-20 justify-center join">
+            <button class="join-item btn" @click="previousPage()">«</button>
+            <button class="join-item btn">Page {{pageIndex}}</button>
+            <button class="join-item btn" @click="nextPage()">»</button>
         </div>
     </div>
 </template>

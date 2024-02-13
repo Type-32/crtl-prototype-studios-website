@@ -92,7 +92,7 @@ export const useContentStore = defineStore({
         async fetchPaginatedGalleries(page: number, pageLimit: number = 10): Promise<Payload<Gallery[]>>{
             let galleries: Payload<any[]> = { data: [], meta: {} };
             try {
-                await axios.get(joinUrl(["api","galleries"], `?populate[0]=galleryContent.framePiece&populate[1]=galleryContent.motionPiece&populate[2]=galleryContent.motionCover&populate[3]=galleryContent.trackPiece&populate[4]=galleryContent.trackCover&populate[5]=galleryAuthors&pagination[page]=${page}&pagination[pageSize]=${pageLimit}`)).then((response) => {
+                await axios.get(joinUrl(["api","galleries"], `?populate[0]=galleryContent.framePiece&populate[1]=galleryContent.motionPiece&populate[2]=galleryContent.motionCover&populate[3]=galleryContent.trackPiece&populate[4]=galleryContent.trackCover&populate[5]=galleryAuthors&pagination[page]=${page}&pagination[pageSize]=${pageLimit}`, false)).then((response) => {
                     galleries = { data: response.data.data, meta: response.data.meta };
                 });
             } catch(error) {
