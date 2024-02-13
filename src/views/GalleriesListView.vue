@@ -31,7 +31,7 @@ onMounted(async () => {
             <div class="text-base-content/70">Loading projects...</div>
         </div>
         <div class="flex-grow grid-cols-3 grid flex-row gap-5 gap-y-10 fade-in-from-top" v-else>
-            <GalleryCard :gallery="gallery" v-for="(gallery, galleryIndex) in galleries" :key="galleryIndex" @click="$router.push(`/gallery/${gallery.attributes.gallerySlug}`)"/>
+            <GalleryCard :gallery="gallery" v-for="(gallery, galleryIndex) in galleries.reverse()" :key="galleryIndex" @click="$router.push(`/gallery/${gallery.attributes.gallerySlug}`)"/>
         </div>
     </div>
 </template>

@@ -30,8 +30,8 @@ for(let i = 0; i < props.gallery?.attributes?.galleryContent?.length; i++){
 <!--    </div>-->
     <div class="flex flex-col items-center group cursor-pointer h-fit">
         <div class="stack group-hover:shadow-2xl group-hover:-translate-y-1 transition duration-300">
-            <div class="object-contain laptop:w-64 rounded-box bg-base-200" v-for="(image, imageIndex) in imageLinks" :key="imageIndex">
-                <img loading="lazy" :src="image" alt="Post Img" class="rounded"/>
+            <div class="object-contain laptop:w-64 rounded-box bg-base-200 flex flex-row items-center justify-center" v-for="(image, imageIndex) in imageLinks" :key="imageIndex">
+                <img loading="lazy" :src="image" alt="Post Img" class="rounded h-36"/>
             </div>
         </div>
         <div class="flex flex-col items-center mt-4">
