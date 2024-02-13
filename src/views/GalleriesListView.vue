@@ -17,7 +17,6 @@ async function refreshPage(){
     maxPages = rawGalleries.value.meta.pagination?.pageCount || 1
     galleries.value = rawGalleries.value.data
     galleries.value = galleries.value.reverse()
-    console.log(galleries.value)
 }
 
 onMounted(async () => {
