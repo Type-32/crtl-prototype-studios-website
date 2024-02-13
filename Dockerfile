@@ -1,7 +1,7 @@
 FROM node:18-alpine
 
 ARG VITE_CMS_URL
-ENV VITE_CMS_URL $VITE_CMS_URL
+ENV VITE_CMS_URL https://cms.crtl-prototype-studios.cn
 
 WORKDIR /app
 
