@@ -103,7 +103,7 @@ async function loadData(){
     loadingPage.value = true
     try {
         console.log($route.params.slug)
-        await axios.get(`${import.meta.env.VITE_CMS_URL}/api/galleries?filters[gallerySlug][$eq]=${$route.params.slug}&populate[0]=galleryContent.framePiece&populate[1]=galleryContent.motionPiece&populate[2]=galleryContent.motionCover&populate[3]=galleryContent.trackPiece&populate[4]=galleryContent.trackCover&populate[5]=galleryAuthors`).then((response) => {
+        await axios.get(`${import.meta.env.VITE_CMS_URL}/api/galleries?filters[gallerySlug][$eq]=${$route.params.slug}&populate[0]=galleryContent.framePiece&populate[1]=galleryContent.motionPiece&populate[2]=galleryContent.motionCover&populate[3]=galleryContent.trackPiece&populate[4]=galleryContent.trackCover&populate[5]=galleryAuthors`, { headers: {'Authorization': import.meta.env.VITE_CMS_TOKEN}}).then((response) => {
             gallery.value = { data: response.data.data, meta: response.data.meta };
         });
         if (gallery.value) {
