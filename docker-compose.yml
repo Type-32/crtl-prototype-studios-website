@@ -1,0 +1,10 @@
+version: "3"
+services:
+  crtl-prototype-studios-website:
+    image: type32/crtl-prototype-studios-website:latest
+    container_name: crtl-prototype-studios-website
+    ports:
+      - 20011:4173
+    environment:
+      - VITE_CMS_URL=${VITE_CMS_URL}
+      - VITE_CMS_TOKEN=${VITE_CMS_TOKEN}

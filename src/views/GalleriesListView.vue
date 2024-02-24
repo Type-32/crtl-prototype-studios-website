@@ -13,7 +13,7 @@ let maxPages: number;
 const loadingPage = ref(false)
 
 async function refreshPage(){
-    rawGalleries.value = await $content.fetchPaginatedGalleries(pageIndex.value, pageLimit.value)
+    rawGalleries.value = await $content.fetchPaginatedGalleries(pageIndex.value, pageLimit.value, import.meta.env.VITE_CMS_URL, import.meta.env.VITE_CMS_TOKEN)
     maxPages = rawGalleries.value.meta.pagination?.pageCount || 1
     galleries.value = rawGalleries.value.data
     galleries.value = galleries.value.reverse()

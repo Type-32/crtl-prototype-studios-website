@@ -16,7 +16,7 @@ onMounted(async () => {
 })
 
 async function refreshPage(){
-    rawData = await $content.fetchPaginatedProjects(pageIndex.value, pageLimit.value)
+    rawData = await $content.fetchPaginatedProjects(pageIndex.value, pageLimit.value, import.meta.env.VITE_CMS_URL, import.meta.env.VITE_CMS_TOKEN)
     maxPages = rawData.meta.pagination?.pageCount || 1
     projectsRaw.value = rawData.data
 

@@ -12,8 +12,8 @@ const loadingPage = ref(false)
 
 onMounted(async () => {
     loadingPage.value = true
-    postsRaw.value = (await $content.fetchPosts(true)).data;
-    projectsRaw.value = (await $content.fetchProjects(true)).data;
+    postsRaw.value = (await $content.fetchPosts(true, import.meta.env.VITE_CMS_URL, import.meta.env.VITE_CMS_TOKEN)).data;
+    projectsRaw.value = (await $content.fetchProjects(true, import.meta.env.VITE_CMS_URL, import.meta.env.VITE_CMS_TOKEN)).data;
     loadingPage.value = false
 })
 </script>

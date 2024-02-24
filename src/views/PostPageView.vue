@@ -35,7 +35,7 @@ onBeforeMount(async () => {
         } else {
             $router.push('404'); // Redirect to home page if post is not found
         }
-        allPosts.value = await $content.fetchPosts(true)
+        allPosts.value = await $content.fetchPosts(true, import.meta.env.VITE_CMS_URL, import.meta.env.VITE_CMS_TOKEN)
         filteredPosts = allPosts.value?.data.filter((p: any) => p.postSlug !== post.value?.data[0].attributes.postSlug);
         randomPost.value = filteredPosts[Math.floor(Math.random() * filteredPosts.length)];
     } catch (error: any) {

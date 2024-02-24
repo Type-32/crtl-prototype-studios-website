@@ -40,8 +40,8 @@ onMounted(async () => {
 })
 
 async function refreshPage(){
-    allPosts.value = await $content.fetchPosts(true)
-    rawData = await $content.fetchPaginatedPosts(postPage.value, pageLimit.value);
+    allPosts.value = await $content.fetchPosts(true, import.meta.env.VITE_CMS_URL, import.meta.env.VITE_CMS_TOKEN)
+    rawData = await $content.fetchPaginatedPosts(postPage.value, pageLimit.value, import.meta.env.VITE_CMS_URL, import.meta.env.VITE_CMS_TOKEN);
     maxPages.value = rawData.meta.pagination?.pageCount
     postsRaw.value = rawData.data
 }
