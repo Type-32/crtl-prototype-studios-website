@@ -29,7 +29,7 @@ export const useContentStore = defineStore({
             if(forceRefresh || this.posts.data.length === 0) {
                 try {
                     console.log(joinUrl(["api","posts"]))
-                    await axios.get(joinUrl(["api","posts"]), { headers: {'Authorization': import.meta.env.VITE_CMS_TOKEN}}).then((response) => {
+                    await axios.get(joinUrl(["api","posts"]), { headers: {'Authorization': `bearer ${import.meta.env.VITE_CMS_TOKEN}`}}).then((response) => {
                         posts = { data: response.data.data, meta: response.data.meta };
                         this.posts = posts;
                     });
@@ -43,7 +43,7 @@ export const useContentStore = defineStore({
             let projects: Payload<Project[]> = { data: [], meta: {} };
             if(forceRefresh || this.projects.data.length === 0) {
                 try {
-                    await axios.get(joinUrl(["api","projects"]), { headers: {'Authorization': import.meta.env.VITE_CMS_TOKEN}}).then((response) => {
+                    await axios.get(joinUrl(["api","projects"]), { headers: {'Authorization': `bearer ${import.meta.env.VITE_CMS_TOKEN}`}}).then((response) => {
                         projects = { data: response.data.data, meta: response.data.meta };
                         this.projects = projects;
                     });
@@ -57,7 +57,7 @@ export const useContentStore = defineStore({
             let galleries: Payload<Gallery[]> = { data: [], meta: {} };
             if(forceRefresh || this.galleries.data.length === 0) {
                 try {
-                    await axios.get(joinUrl(["api","galleries"], "?populate[0]=galleryContent.framePiece&populate[1]=galleryContent.motionPiece&populate[2]=galleryContent.motionCover&populate[3]=galleryContent.trackPiece&populate[4]=galleryContent.trackCover&populate[5]=galleryAuthors", false), { headers: {'Authorization': import.meta.env.VITE_CMS_TOKEN}}).then((response) => {
+                    await axios.get(joinUrl(["api","galleries"], "?populate[0]=galleryContent.framePiece&populate[1]=galleryContent.motionPiece&populate[2]=galleryContent.motionCover&populate[3]=galleryContent.trackPiece&populate[4]=galleryContent.trackCover&populate[5]=galleryAuthors", false), { headers: {'Authorization': `bearer ${import.meta.env.VITE_CMS_TOKEN}`}}).then((response) => {
                         galleries = { data: response.data.data, meta: response.data.meta };
                         this.galleries = galleries;
                     });
@@ -70,7 +70,7 @@ export const useContentStore = defineStore({
         async fetchPaginatedPosts(page: number, pageLimit: number = 10): Promise<Payload<Post[]>>{
             let posts: Payload<any[]> = { data: [], meta: {} };
             try {
-                await axios.get(joinUrl(["api","posts"], `?pagination[page]=${page}&pagination[pageSize]=${pageLimit}`), { headers: {'Authorization': import.meta.env.VITE_CMS_TOKEN}}).then((response) => {
+                await axios.get(joinUrl(["api","posts"], `?pagination[page]=${page}&pagination[pageSize]=${pageLimit}`), { headers: {'Authorization': `bearer ${import.meta.env.VITE_CMS_TOKEN}`}}).then((response) => {
                     posts = { data: response.data.data, meta: response.data.meta };
                 });
             } catch(error) {
@@ -81,7 +81,7 @@ export const useContentStore = defineStore({
         async fetchPaginatedProjects(page: number, pageLimit: number = 10): Promise<Payload<Project[]>>{
             let projects: Payload<any[]> = { data: [], meta: {} };
             try {
-                await axios.get(joinUrl(["api","projects"], `?pagination[page]=${page}&pagination[pageSize]=${pageLimit}`), { headers: {'Authorization': import.meta.env.VITE_CMS_TOKEN}}).then((response) => {
+                await axios.get(joinUrl(["api","projects"], `?pagination[page]=${page}&pagination[pageSize]=${pageLimit}`), { headers: {'Authorization': `bearer ${import.meta.env.VITE_CMS_TOKEN}`}}).then((response) => {
                     projects = { data: response.data.data, meta: response.data.meta };
                 });
             } catch(error) {
@@ -92,7 +92,7 @@ export const useContentStore = defineStore({
         async fetchPaginatedGalleries(page: number, pageLimit: number = 10): Promise<Payload<Gallery[]>>{
             let galleries: Payload<any[]> = { data: [], meta: {} };
             try {
-                await axios.get(joinUrl(["api","galleries"], `?populate[0]=galleryContent.framePiece&populate[1]=galleryContent.motionPiece&populate[2]=galleryContent.motionCover&populate[3]=galleryContent.trackPiece&populate[4]=galleryContent.trackCover&populate[5]=galleryAuthors&pagination[page]=${page}&pagination[pageSize]=${pageLimit}`, false), { headers: {'Authorization': import.meta.env.VITE_CMS_TOKEN}}).then((response) => {
+                await axios.get(joinUrl(["api","galleries"], `?populate[0]=galleryContent.framePiece&populate[1]=galleryContent.motionPiece&populate[2]=galleryContent.motionCover&populate[3]=galleryContent.trackPiece&populate[4]=galleryContent.trackCover&populate[5]=galleryAuthors&pagination[page]=${page}&pagination[pageSize]=${pageLimit}`, false), { headers: {'Authorization': `bearer ${import.meta.env.VITE_CMS_TOKEN}`}}).then((response) => {
                     galleries = { data: response.data.data, meta: response.data.meta };
                 });
             } catch(error) {
